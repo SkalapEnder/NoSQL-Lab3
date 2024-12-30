@@ -1,31 +1,34 @@
 [
-    {
-      "brand_name": "Apple",
-      "brand_description": "Electronic company specializing in mobile devices and computers",
-      "headquarters": "Cupertino, California, USA",
-      "founded_year": 1976,
-      "website": "https://www.apple.com"
-    },
-    {
-      "brand_name": "Samsung",
-      "brand_description": "South Korean multinational electronics company",
-      "headquarters": "Seoul, South Korea",
-      "founded_year": 1938,
-      "website": "https://www.samsung.com"
-    },
-    {
-      "brand_name": "Sony",
-      "brand_description": "Japanese multinational conglomerate corporation",
-      "headquarters": "Tokyo, Japan",
-      "founded_year": 1946,
-      "website": "https://www.sony.com"
-    },
-    {
-      "brand_name": "LG",
-      "brand_description": "South Korean multinational conglomerate corporation",
-      "headquarters": "Seoul, South Korea",
-      "founded_year": 1958,
-      "website": "https://www.lg.com"
-    }
-  ]
-  
+  {
+    "brand_id": 0,
+    "brand_name": "Apple",
+    "brand_description": "Electronic company specializing in mobile devices and computers",
+    "headquarters": "Cupertino, California, USA",
+    "founded_year": 1976,
+    "website": "https://www.apple.com"
+  },
+  {
+    "brand_id": 1,
+    "brand_name": "Samsung",
+    "brand_description": "South Korean multinational electronics company",
+    "headquarters": "Seoul, South Korea",
+    "founded_year": 1938,
+    "website": "https://www.samsung.com"
+  },
+  {
+    "brand_id": 2,
+    "brand_name": "Sony",
+    "brand_description": "Japanese multinational conglomerate corporation",
+    "headquarters": "Tokyo, Japan",
+    "founded_year": 1946,
+    "website": "https://www.sony.com"
+  },
+  {
+    "brand_id": 3,
+    "brand_name": "LG",
+    "brand_description": "South Korean multinational conglomerate corporation",
+    "headquarters": "Seoul, South Korea",
+    "founded_year": 1958,
+    "website": "https://www.lg.com"
+  }
+]
