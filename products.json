@@ -1,0 +1,93 @@
+[
+    {
+      "product_id": 101,
+      "name": "Apple iPhone 14",
+      "price": 999,
+      "quantity": 100,
+      "description": "Latest generation iPhone with A15 Bionic chip",
+      "brand": "Apple",
+      "category": "LED"
+    },
+    {
+      "product_id": 102,
+      "name": "Samsung Galaxy S22",
+      "price": 849,
+      "quantity": 50,
+      "description": "High-performance Android smartphone with 120Hz display",
+      "brand": "Samsung",
+      "category": "OLED"
+    },
+    {
+      "product_id": 103,
+      "name": "Sony Bravia 65 inch 4K TV",
+      "price": 1200,
+      "quantity": 20,
+      "description": "Bravia series 4K Ultra HD LED TV",
+      "brand": "Sony",
+      "category": "LED"
+    },
+    {
+      "product_id": 104,
+      "name": "LG OLED 55 inch TV",
+      "price": 1500,
+      "quantity": 30,
+      "description": "OLED TV with self-lighting pixels",
+      "brand": "LG",
+      "category": "OLED"
+    },
+    {
+      "product_id": 105,
+      "name": "Samsung QLED 75 inch TV",
+      "price": 2000,
+      "quantity": 40,
+      "description": "Large QLED TV with Quantum Dot technology",
+      "brand": "Samsung",
+      "category": "QLED"
+    },
+    {
+      "product_id": 106,
+      "name": "LG QLED 65 inch TV",
+      "price": 1800,
+      "quantity": 25,
+      "description": "QLED TV with advanced color and contrast",
+      "brand": "LG",
+      "category": "QLED"
+    },
+    {
+      "product_id": 107,
+      "name": "Sony Bravia 55 inch 4K TV",
+      "price": 1000,
+      "quantity": 15,
+      "description": "4K UHD LED TV with HDR support",
+      "brand":"Sony",
+      "category": "LED"
+    },
+    {
+      "product_id": 108,
+      "name": "Samsung Galaxy A52",
+      "price": 499,
+      "quantity": 60,
+      "description": "Mid-range smartphone with Super AMOLED display",
+      "brand": "Samsung",
+      "category": "LED"
+    },
+    {
+      "product_id": 109,
+      "name": "Apple MacBook Pro",
+      "price": 2300,
+      "quantity": 10,
+      "description": "High-performance laptop with M1 chip",
+      "brand": "Apple",
+      "category": "OLED"
+    },
+    {
+      "product_id": 110,
+      "name": "Sony PlayStation 5",
+      "price": 499,
+      "quantity": 80,
+      "description": "Next-gen gaming console with 4K support",
+      "brand": "Sony",
+      "category": "LED"
+    }
+  ]
+  

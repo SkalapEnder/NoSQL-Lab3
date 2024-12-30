@@ -1,0 +1,21 @@
+[
+    {
+      "category_name": "LED",
+      "category_description": "LED TVs with energy-efficient lighting",
+      "category_type": "Display Technology",
+      "target_audience": "General consumers"
+    },
+    {
+      "category_name": "OLED",
+      "category_description": "OLED TVs with organic LED technology",
+      "category_type": "Display Technology",
+      "target_audience": "Premium buyers"
+    },
+    {
+      "category_name": "QLED",
+      "category_description": "QLED TVs with quantum dot technology",
+      "category_type": "Display Technology",
+      "target_audience": "Tech enthusiasts"
+    }
+  ]
+  
