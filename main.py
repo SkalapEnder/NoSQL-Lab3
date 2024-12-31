@@ -1,6 +1,5 @@
 import inquirer
 from pymongo import MongoClient
-from bson import ObjectId
 
 # Establish connection to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
@@ -13,13 +12,11 @@ categories_collection = db['category']
 # Getters
 # Function to get brand options from MongoDB
 def get_brands():
-    brands = brands_collection.find()
-    return [{'name': brand['brand_name']} for brand in brands]
+    return list(brands_collection.find())
 
 # Function to get category options from MongoDB
 def get_categories():
-    categories = categories_collection.find()
-    return [{'name': category['category_name']} for category in categories]
+    return list(categories_collection.find())
 
 # Functions to get free id from collection
 def get_free_id_products():
@@ -69,10 +66,10 @@ def create_product():
     questions = [
         inquirer.List('category',
                       message="Which category does the product belong to?",
-                      choices=[category['name'] for category in categories]),
+                      choices=[category['category_name'] for category in categories]),
         inquirer.List('brand',
                       message="Which company does the product belong to?",
-                      choices=[brand['name'] for brand in brands]),
+                      choices=[brand['brand_name'] for brand in brands]),
         inquirer.Text('name', message="Enter the product name:"),
         inquirer.Text('price', message="Enter the product price:"),
         inquirer.Text('quantity', message="Enter the product quantity:"),
@@ -82,8 +79,8 @@ def create_product():
     
     answers = inquirer.prompt(questions)
     
-    selected_category = next(item for item in categories if item['name'] == answers['category'])
-    selected_brand = next(item for item in brands if item['name'] == answers['brand'])
+    selected_category = next(item for item in categories if item['category_name'] == answers['category'])
+    selected_brand = next(item for item in brands if item['brand_name'] == answers['brand'])
     
     # Create new product document
     new_product = {
@@ -93,8 +90,8 @@ def create_product():
         "quantity": int(answers['quantity']),
         "diagonal": float(answers['diagonal']),
         "description": answers['description'],
-        "category": selected_category['name'],
-        "brand": selected_brand['name']
+        "category_id": selected_category['category_id'],
+        "brand_id": selected_brand['brand_id']
     }
 
     # Insert new product into the products collection
