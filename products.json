@@ -6,8 +6,8 @@
     "quantity": 100,
     "diagonal": 55,
     "description": "Latest generation 4K TV from Apple",
-    "brand": "Apple",
-    "category": "LED"
+    "brand_id": 0,
+    "category_id": 0
   },
   {
     "product_id": 102,
@@ -16,8 +16,8 @@
     "quantity": 50,
     "diagonal": 55,
     "description": "High-performance 4K Neo QLED TV with 120Hz display",
-    "brand": "Samsung",
-    "category": "OLED"
+    "brand_id": 1,
+    "category_id": 1
   },
   {
     "product_id": 103,
@@ -26,8 +26,8 @@
     "quantity": 20,
     "diagonal": 65,
     "description": "Bravia series 4K Ultra HD LED TV",
-    "brand": "Sony",
-    "category": "LED"
+    "brand_id": 2,
+    "category_id": 0
   },
   {
     "product_id": 104,
@@ -36,8 +36,8 @@
     "quantity": 30,
     "diagonal": 55,
     "description": "OLED TV with self-lighting pixels",
-    "brand": "LG",
-    "category": "OLED"
+    "brand_id": 3,
+    "category_id": 1
   },
   {
     "product_id": 105,
@@ -46,8 +46,8 @@
     "quantity": 40,
     "diagonal": 75,
     "description": "Large QLED TV with Quantum Dot technology",
-    "brand": "Samsung",
-    "category": "QLED"
+    "brand_id": 1,
+    "category_id": 2
   },
   {
     "product_id": 106,
@@ -56,8 +56,8 @@
     "quantity": 25,
     "diagonal": 65,
     "description": "QLED TV with advanced color and contrast",
-    "brand": "LG",
-    "category": "QLED"
+    "brand_id": 3,
+    "category_id": 2
   },
   {
     "product_id": 107,
@@ -66,8 +66,8 @@
     "quantity": 15,
     "diagonal": 55,
     "description": "4K UHD LED TV with HDR support",
-    "brand": "Sony",
-    "category": "LED"
+    "brand_id": 2,
+    "category_id": 0
   },
   {
     "product_id": 108,
@@ -76,8 +76,8 @@
     "quantity": 60,
     "diagonal": 65,
     "description": "TV that doubles as artwork with customizable frames",
-    "brand": "Samsung",
-    "category": "QLED"
+    "brand_id": 1,
+    "category_id": 2
   },
   {
     "product_id": 109,
@@ -86,8 +86,8 @@
     "quantity": 10,
     "diagonal": 65,
     "description": "Apple's flagship 4K TV with seamless integration into the Apple ecosystem",
-    "brand": "Apple",
-    "category": "OLED"
+    "brand_id": 0,
+    "category_id": 1
   },
   {
     "product_id": 110,
@@ -96,7 +96,7 @@
     "quantity": 80,
     "diagonal": 75,
     "description": "Next-gen 8K LED TV with superior resolution and color",
-    "brand": "Sony",
-    "category": "LED"
+    "brand_id": 2,
+    "category_id": 0
   }
 ]

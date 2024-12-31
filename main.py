@@ -103,36 +103,59 @@ def create_product():
 
 # Display products by category or brand
 def display_products():
-    categories = get_categories()
-    brands = get_brands()
+    categories = list(categories_collection.find().sort({"category_id": 1}))
+    brands = list(brands_collection.find().sort({"brand_id": 1}))
 
     # Ask user whether to filter by category or brand
-    filter_choice = inquirer.List('filter_choice', message="Filter products by", choices=["Category", "Brand", "All"])
+    filter_choice = inquirer.List(
+        'filter_choice', 
+        message="Filter products by", 
+        choices=["Category", "Brand", "All"]
+    )
     filter_answer = inquirer.prompt([filter_choice])
 
     if filter_answer['filter_choice'] == "Category":
-        category_choice = inquirer.List('category', message="Select category", choices=[category['name'] for category in categories])
-
+        category_choice = inquirer.List(
+            'category', 
+            message="Select category", 
+            choices=[category['category_name'] for category in categories]
+        )
         selected_category = inquirer.prompt([category_choice])
 
-        # Find products by category
-        category = next(item for item in categories if item['name'] == selected_category['category'])
-        products = products_collection.find({'category': category['name']}).sort({"product_id": 1})
+        # Find products by category_id
+        category = next(item for item in categories if item['category_name'] == selected_category['category'])
+        products = products_collection.find({'category_id': category['category_id']}).sort("product_id", 1)
 
     elif filter_answer['filter_choice'] == "Brand":
-        brand_choice = inquirer.List('brand', message="Select brand", choices=[brand['name'] for brand in brands])
+        brand_choice = inquirer.List(
+            'brand', 
+            message="Select brand", 
+            choices=[brand['brand_name'] for brand in brands]
+        )
         selected_brand = inquirer.prompt([brand_choice])
 
-        # Find products by brand
-        brand = next(item for item in brands if item['name'] == selected_brand['brand'])
-        products = products_collection.find({'brand': brand['name']}).sort({"product_id": 1})
+        # Find products by brand_id
+        brand = next(item for item in brands if item['brand_name'] == selected_brand['brand'])
+        products = products_collection.find({'brand_id': brand['brand_id']}).sort("product_id", 1)
 
-    else: products = products_collection.find().sort({"product_id": 1})
+    else:  # No filter
+        products = products_collection.find().sort("product_id", 1)
 
     # Display products
     print("\nProducts:")
     for product in products:
-        print(f"\nID: {product['product_id']}\nName: {product['name']}\nPrice: ${product['price']}\nQuantity: {product['quantity']}\nScreen size: {product['diagonal']}\nCategory:{product['category']}\nBrand: {product['brand']}\nDescription: {product['description']}")
+        # Get category and brand names for display
+        category_name = next((cat['category_name'] for cat in categories if cat.get('category_id') == product.get('category_id')), "Unknown")
+        brand_name = next((brand['brand_name'] for brand in brands if brand.get('brand_id') == product.get('brand_id')), "Unknown")
+
+        print(f"\nID: {product['product_id']}\n"
+              f"Name: {product['name']}\n"
+              f"Price: ${product['price']}\n"
+              f"Quantity: {product['quantity']}\n"
+              f"Screen size: {product['diagonal']}\n"
+              f"Category: {category_name}\n"
+              f"Brand: {brand_name}\n"
+              f"Description: {product['description']}")
 
 # Display all products in short variant
 def display_products_short():
@@ -152,26 +175,41 @@ def update_product():
 
     categories = get_categories()
     brands = get_brands()
-    
+
     product_id = int(answers['product_id'])
     product = products_collection.find_one({"product_id": product_id})
-    
+
     if product:
         questions = [
             inquirer.Text('name', message="Enter new product name", default=product['name']),
-            inquirer.Text('price', message="Enter new product price", default=product['price']),
-            inquirer.Text('quantity', message="Enter new product quantity", default=product['quantity']),
-            inquirer.Text('diagonal', message="Enter new screen size", default=product['diagonal']),
+            inquirer.Text('price', message="Enter new product price", default=str(product['price'])),
+            inquirer.Text('quantity', message="Enter new product quantity", default=str(product['quantity'])),
+            inquirer.Text('diagonal', message="Enter new screen size", default=str(product['diagonal'])),
             inquirer.Text('description', message="Enter new product description", default=product['description']),
-            inquirer.List('category', message="Select new category", choices=[category['name'] for category in categories], default=product['category']),
-            inquirer.List('brand', message="Select an section", choices=[brand['name'] for brand in brands], default=product['brand'])
+            inquirer.List('category', message="Select new category", choices=[category['category_name'] for category in categories], default=next(category['category_name'] for category in categories if category['category_id'] == product['category'])),
+            inquirer.List('brand', message="Select new brand", choices=[brand['brand_name'] for brand in brands], default=next(brand['brand_name'] for brand in brands if brand['brand_id'] == product['brand']))
         ]
         updated_data = inquirer.prompt(questions)
 
-        # Update the product
+        # Map category and brand names back to their IDs
+        updated_category_id = next(category['category_id'] for category in categories if category['category_name'] == updated_data['category'])
+        updated_brand_id = next(brand['brand_id'] for brand in brands if brand['brand_name'] == updated_data['brand'])
+
+        # Prepare the updated product data
+        updated_product = {
+            "name": updated_data['name'],
+            "price": float(updated_data['price']),
+            "quantity": int(updated_data['quantity']),
+            "diagonal": float(updated_data['diagonal']),
+            "description": updated_data['description'],
+            "category": updated_category_id,
+            "brand": updated_brand_id
+        }
+
+        # Update the product in the database
         products_collection.update_one(
-            {"product_id": int(product_id)},
-            {"$set": updated_data}
+            {"product_id": product_id},
+            {"$set": updated_product}
         )
         print("Product updated successfully!")
     else:
@@ -244,7 +282,6 @@ def update_brand():
     brand = brands_collection.find_one({"brand_id": brand_id})
 
     if brand:
-        prev_name = brand['brand_name']
         questions = [
             inquirer.Text('brand_name', message="Enter new brand name", default=brand['brand_name']),
             inquirer.Text('brand_description', message="Enter new brand description", default=brand['brand_description']),
@@ -254,12 +291,7 @@ def update_brand():
         ]
         answers = inquirer.prompt(questions)
 
-        if prev_name != answers['brand_name']:
-            products_collection.update_many(
-                {"brand": prev_name},
-                {"$set": {"brand": answers['brand_name']}}
-            )
-
+        # Update brand details
         updated_brand = {
             "brand_name": answers['brand_name'],
             "brand_description": answers['brand_description'],
@@ -273,21 +305,23 @@ def update_brand():
     else:
         print("Brand not found!")
 
+
 # Remove brand by brand_id
 def remove_brand():
     display_brands_short()
 
     questions = [
-        inquirer.Text('brand_id', message="Enter brand ID to update:")
+        inquirer.Text('brand_id', message="Enter brand ID to delete:")
     ]
     answers = inquirer.prompt(questions)
 
     brand_id = int(answers['brand_id'])
-    brand = brands_collection.find_one({"brand_id": int(brand_id)})
+    brand = brands_collection.find_one({"brand_id": brand_id})
+
     if brand:
-        products_collection.delete_many({"brand": brand['brand_name']})
+        products_collection.delete_many({"brand_id": brand_id})
         brands_collection.delete_one({"brand_id": brand_id})
-        print("Brand removed successfully!")
+        print("Brand and all relevant products removed successfully!")
     else:
         print("Brand not found!")
 
@@ -338,21 +372,15 @@ def update_category():
     category = categories_collection.find_one({"category_id": category_id})
 
     if category:
-        prev_name = category['category_name']
         questions = [
             inquirer.Text('category_name', message="Enter new category name", default=category['category_name']),
             inquirer.Text('category_description', message="Enter new category description", default=category['category_description']),
             inquirer.Text('category_type', message="Enter new category type", default=category['category_type']),
-            inquirer.Text('target_audience', message="Enter new target audience", default=category['target_audience']),
+            inquirer.Text('target_audience', message="Enter new target audience", default=category['target_audience'])
         ]
         answers = inquirer.prompt(questions)
 
-        if prev_name != answers['category_name']:
-            products_collection.update_many(
-                {"category": prev_name},
-                {"$set": {"category": answers['category_name']}}
-            )
-
+        # Update category details
         updated_category = {
             "category_name": answers['category_name'],
             "category_description": answers['category_description'],
@@ -370,17 +398,17 @@ def remove_category():
     display_categories_short()
 
     questions = [
-        inquirer.Text('category_id', message="Enter category ID to remove:")
+        inquirer.Text('category_id', message="Enter category ID to delete:")
     ]
     answers = inquirer.prompt(questions)
-    
+
     category_id = int(answers['category_id'])
     category = categories_collection.find_one({"category_id": category_id})
 
     if category:
-        products_collection.delete_many({"category": category['category_name']})
+        products_collection.delete_many({"category_id": category_id})
         categories_collection.delete_one({"category_id": category_id})
-        print("Category and relevant products removed successfully!")
+        print("Category and all relevant products removed successfully!")
     else:
         print("Category not found!")
 
