@@ -183,8 +183,8 @@ def update_product():
             inquirer.Text('quantity', message="Enter new product quantity", default=str(product['quantity'])),
             inquirer.Text('diagonal', message="Enter new screen size", default=str(product['diagonal'])),
             inquirer.Text('description', message="Enter new product description", default=product['description']),
-            inquirer.List('category', message="Select new category", choices=[category['category_name'] for category in categories], default=next(category['category_name'] for category in categories if category['category_id'] == product['category'])),
-            inquirer.List('brand', message="Select new brand", choices=[brand['brand_name'] for brand in brands], default=next(brand['brand_name'] for brand in brands if brand['brand_id'] == product['brand']))
+            inquirer.List('category', message="Select new category", choices=[category['category_name'] for category in categories], default=next(category['category_name'] for category in categories if category['category_id'] == product['category_id'])),
+            inquirer.List('brand', message="Select new brand", choices=[brand['brand_name'] for brand in brands], default=next(brand['brand_name'] for brand in brands if brand['brand_id'] == product['brand_id']))
         ]
         updated_data = inquirer.prompt(questions)
 
