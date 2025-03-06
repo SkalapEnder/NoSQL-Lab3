@@ -59,11 +59,12 @@ if __name__ == "__main__":
     walmart_url = "https://www.walmart.com/shop/deals/electronics/tvs?seo=deals&seo=electronics&seo=tvs&page=1&affinityOverride=default"
 
     tv_data = scrape_walmart_tvs(walmart_url)
-
+    
     if tv_data:
         # Print the list of dictionaries
         print(json.dumps(tv_data, indent=4))
 
         # Optionally, save the data to a file
-        with open('walmart_tvs.json', 'w') as f:
+        with open('products_raw.json', 'x') as f:
             json.dump(tv_data, f, indent=4)
+        print("Data from website is scrapped!")
